@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Андройд</string>
+    <string name="hello_message">Hello World!</string>
+    <string name="ButtonText">I\’m a button</string>
+    <string name="txt_vw_txt">Look at my GUI</string>
+    <string name="bttn_txt">Click here</string>
+    <string name="chck_bx_txt">Check this out!</string>
+    <string name="swtch_txt">Switch on/off</string>
+    <string name="edit_txt_txt">Type email here</string>
+    <string name="toast_message">Here is more information</string>
+    <string name="switch_messageON">The switch is now on</string>
+    <string name="switch_messageOFF">The switch is now off</string>
+    <string name="switch_undo">UNDO</string>
+    <string name="tV">Введите свой эл. адрес</string>
+    <string name="tV1">Введите пароль</string>
+    <string name="button7">ВОЙТИ</string>
+    <string name="tv">Ваш профиль</string>
+    <string name="tv1">Ваше имя</string>
+    <string name="tv3">Введите свой эл. адрес</string>
+    <string name="tv4">Ваше фото</string>
+    <string name="tv5">Нажмите кнопку, чтобы сделать фотографию</string>
+    <string name="et">Введите свое имя</string>
+    <string name="et1">Введите свой эл. адрес</string>
+
+</resources>
