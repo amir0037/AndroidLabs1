@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="370dp"
+            android:layout_height="20dp"
+            android:text="@string/tv" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tv1" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/et"
+            android:inputType="textPersonName"
+            android:autofillHints=""
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tv3" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/et1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/et1"
+            android:inputType="textEmailAddress"
+            android:autofillHints="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv4"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tv4" />
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/imageButtonInt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/picture_frame"
+        android:contentDescription="" />
+    <LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal">
+<TextView
+    android:id="@+id/tv5"
+    android:layout_width="370dp"
+    android:layout_height="wrap_content"
+    android:text="@string/tv5" />
+</LinearLayout>
+    <Button
+        android:id="@+id/goToChat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/goToChat"
+        />
+</LinearLayout>

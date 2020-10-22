@@ -7,11 +7,13 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 public class ProfileActivity extends AppCompatActivity {
     ImageButton mImageButton;
+    Button chatButton;
     EditText et1;
 
     public static final String ACTIVITY_NAME = "PROFILE_ACTIVITY";
@@ -26,6 +28,10 @@ public class ProfileActivity extends AppCompatActivity {
         et1.setText(fromMain.getStringExtra("Email"));
 
         Log.e(ACTIVITY_NAME, "onCreate(Bundle savedInstanceState);");
+
+        chatButton = findViewById(R.id.goToChat);
+        Intent goToProfile = new Intent(ProfileActivity.this, ChatRoomActivity.class);
+        chatButton.setOnClickListener(bt -> startActivity(goToProfile));
 
     }
 
@@ -46,41 +52,41 @@ public class ProfileActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             mImageButton.setImageBitmap(imageBitmap);
         }
-        Log.e(ACTIVITY_NAME, "onActivityResult()" /* replace with function name */);
+        Log.e(ACTIVITY_NAME, "onActivityResult()");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.e(ACTIVITY_NAME, "onStart();" /* replace with function name */);
+        Log.e(ACTIVITY_NAME, "onStart();");
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e(ACTIVITY_NAME, "onStop();" /* replace with function name */);
+        Log.e(ACTIVITY_NAME, "onStop();");
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e(ACTIVITY_NAME, "onDestroy();" /* replace with function name */);
+        Log.e(ACTIVITY_NAME, "onDestroy();");
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e(ACTIVITY_NAME, "onPause();" /* replace with function name */);
+        Log.e(ACTIVITY_NAME, "onPause();");
 
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        Log.e(ACTIVITY_NAME, "onResume();" /* replace with function name */);
+        Log.e(ACTIVITY_NAME, "onResume();");
 
     }
 }

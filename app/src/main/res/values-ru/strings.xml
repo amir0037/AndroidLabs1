@@ -23,5 +23,9 @@
     <string name="tv5">Нажмите кнопку, чтобы сделать фотографию</string>
     <string name="et">Введите свое имя</string>
     <string name="et1">Введите свой эл. адрес</string>
+    <string name="goToChat">Перейти в чат</string>
+    <string name="sendText"></string>
+
+
 
 </resources>
