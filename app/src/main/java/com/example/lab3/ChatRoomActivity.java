@@ -3,9 +3,14 @@ package com.example.lab3;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.DataSetObserver;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +36,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     Button sendButton;
     Button receiveButton;
     EditText editText;
-
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +49,13 @@ public class ChatRoomActivity extends AppCompatActivity {
         editText = findViewById(R.id.editText);
 
         list.setOnItemClickListener((parent, view, position, id) ->{
+                Message selectedMassage = arr.get(position);
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                     alertDialogBuilder.setTitle("Do you want to delete this?").setMessage("The selected raw is " +
                             (position) + " The DB id is " + adapter.getItemId(position)).
                             setPositiveButton("Yes", (click, arg) -> {
-                                arr.remove(position);
+                                db.delete(MyOpener.table_name, MyOpener.col_id + "= ?", new String[] {Long.toString(selectedMassage.getID())});
+                                 arr.remove(position);
                                 list.setAdapter(adapter); }).
                             setNegativeButton("No", (click, arg) -> {
                         return;
@@ -59,31 +66,73 @@ public class ChatRoomActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                arr.add(new Message(true, editText.getText().toString()));
+                ContentValues newRowValues = new ContentValues();
+                newRowValues.put(MyOpener.col_message, editText.getText().toString());
+                newRowValues.put(MyOpener.col_type, 1);
+                long newID = db.insert(MyOpener.table_name, null, newRowValues);
+                arr.add(new Message(true, editText.getText().toString(), newID));
                 editText.setText("");
                 adapter.notifyDataSetChanged();
-
             }
         });
         receiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                arr.add(new Message(false, editText.getText().toString()));
+                ContentValues newRowValues = new ContentValues();
+                newRowValues.put(MyOpener.col_message, editText.getText().toString());
+                newRowValues.put(MyOpener.col_type, 0);
+                long newID = db.insert(MyOpener.table_name, null, newRowValues);
+                arr.add(new Message(false, editText.getText().toString(), newID));
                 editText.setText("");
                 adapter.notifyDataSetChanged();
             }
         });
 
+        loadDataFromDatabase();
     }
+    private void loadDataFromDatabase() {
 
+        MyOpener dbOpener = new MyOpener(this);
+        db = dbOpener.getWritableDatabase();
+        String[] columns = {MyOpener.col_id, MyOpener.col_message, MyOpener.col_type};
+        Cursor results = db.query(false,
+                MyOpener.table_name,
+                columns,
+                null,
+                null,
+                null,
+                null, null, null);
+      printCursor(results, MyOpener.version);
+        int messageColumnIndex = results.getColumnIndex(MyOpener.col_message);
+        int typeColumnIndex = results.getColumnIndex(MyOpener.col_type);
+        int idColumnIndex = results.getColumnIndex(MyOpener.col_id);
+
+        while (results.moveToNext()) {
+            String message = results.getString(messageColumnIndex);
+            int type = results.getInt(typeColumnIndex);
+            long id = results.getLong(idColumnIndex);
+
+           if(type==1){
+            arr.add(new Message(true, message, id));
+          } else if (type==0){
+                arr.add(new Message(false, message, id));}
+        }
+
+    }
         class Message{
-            public boolean sOr; //true for send, false for receive
+            public boolean sOr;//true for send, false for receive
             public String message;
+            public long id;
 
-            public Message(boolean sOr, String message) {
+            public Message(boolean sOr, String message, long id) {
                 this.sOr = sOr;
                 this.message = message;
+                this.id=id;
             }
+
+            public long getID(){
+                return  id;}
+
                 public String getMessage(){
                 return message;
                 }
@@ -120,5 +169,15 @@ public class ChatRoomActivity extends AppCompatActivity {
                 return rowView;
             }
         }
-    }
+
+        public void printCursor( Cursor c, int version){
+            Log.d("MyTag", "The DB version number: " + String.valueOf(db.getVersion()));
+            Log.d("MyTag", "The number of columns in the cursor: " + String.valueOf(c.getColumnCount()));
+            for(int i=0; i<c.getColumnNames().length;i++){
+            Log.d("MyTag", "Column name: " + c.getColumnNames()[i]);}
+            Log.d("MyTag", "The number of rows in the cursor:" + String.valueOf(c.getCount()));
+            Log.d("MyTag","Result row: " + DatabaseUtils.dumpCursorToString(c));
+
+        }
+}
 
