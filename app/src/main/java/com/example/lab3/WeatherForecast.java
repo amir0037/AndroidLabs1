@@ -136,13 +136,10 @@ public class WeatherForecast extends AppCompatActivity {
                 publishProgress(100);
 
                 String filename = iconName + ".png";
-                FileOutputStream outputStream = openFileOutput( filename, Context.MODE_PRIVATE);
-                weather.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
-                outputStream.flush();
-                outputStream.close();
+
 
                 if(fileExistance(filename)) {
-
+                    Log.i("i", filename +" is found locally");
                     FileInputStream fis = null;
                     try {
                         fis = openFileInput(filename);
@@ -150,6 +147,12 @@ public class WeatherForecast extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     weather = BitmapFactory.decodeStream(fis);
+                  //  Log.i("File is ", filename);
+                } else {FileOutputStream outputStream = openFileOutput( filename, Context.MODE_PRIVATE);
+                    weather.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+                    outputStream.flush();
+                    outputStream.close();
+                    Log.i("i", filename +" to download");
                 }
             }
             catch (Exception e) {
