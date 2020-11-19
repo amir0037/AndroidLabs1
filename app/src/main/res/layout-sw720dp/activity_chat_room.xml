@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="300dp"
+        android:layout_height="1200dp"
+        android:layout_weight="1"
+        />
+    <Button
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send"
+            android:layout_below="@id/list"
+            android:layout_alignRight="@id/list"
+            />
+    <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_below="@id/list"
+            android:layout_height="wrap_content"
+        />
+    <Button
+            android:id="@+id/receive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/list"
+            android:text="@string/receive"
+            />
+
+    <FrameLayout
+        android:id="@+id/fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/list"
+        >
+
+    </FrameLayout>
+
+</RelativeLayout>
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="680dp"
+        android:layout_row="0"
+        android:layout_column="0"
+        />
+
+    <Button
+        android:id="@+id/send"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+       android:layout_row="1"
+       android:layout_column="0"
+        />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_marginStart="100dp"
+
+        />
+
+    <Button
+        android:id="@+id/receive"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:text="Receive"
+        android:layout_marginStart="310dp"
+        android:layout_row="1"
+        android:layout_column="0"
+        />
+
+</GridLayout>-->

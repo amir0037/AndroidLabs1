@@ -2,8 +2,10 @@ package com.example.lab3;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.database.DatabaseUtils;
@@ -19,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -37,29 +40,72 @@ public class ChatRoomActivity extends AppCompatActivity {
     Button receiveButton;
     EditText editText;
     SQLiteDatabase db;
+    FrameLayout fl;
+   // Boolean isTablet = true;
+    public static final String ITEM_SELECTED = "ITEM";
+    public static final String ITEM_ID = "ID";
+    public static final String CHECKED = "CHECKED";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
+        fl = findViewById(R.id.fl);
+
+        boolean isTablet = findViewById(R.id.fl) !=null;
+
         list = (ListView) findViewById(R.id.list);
         list.setAdapter( adapter );
         sendButton = findViewById(R.id.send);
         receiveButton = findViewById(R.id.receive);
         editText = findViewById(R.id.editText);
 
+
         list.setOnItemClickListener((parent, view, position, id) ->{
-                Message selectedMassage = arr.get(position);
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                    alertDialogBuilder.setTitle("Do you want to delete this?").setMessage("The selected raw is " +
-                            (position) + " The DB id is " + adapter.getItemId(position)).
-                            setPositiveButton("Yes", (click, arg) -> {
-                                db.delete(MyOpener.table_name, MyOpener.col_id + "= ?", new String[] {Long.toString(selectedMassage.getID())});
-                                 arr.remove(position);
-                                list.setAdapter(adapter); }).
-                            setNegativeButton("No", (click, arg) -> {
+            Message selectedMassage = arr.get(position);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Do you want to delete this?").setMessage("The selected raw is " +
+                    (position) + " The DB id is " + adapter.getItemId(position)).
+                    setPositiveButton("Yes", (click, arg) -> {
+                        db.delete(MyOpener.table_name, MyOpener.col_id + "= ?", new String[] {Long.toString(selectedMassage.getID())});
+                        arr.remove(position);
+                        list.setAdapter(adapter); }).
+                    setNegativeButton("No", (click, arg) -> {
                         return;
                     }).create().show();
+
+        });
+
+        list.setOnItemClickListener((list, view, position, id) ->{
+
+           Message selectedMassage = arr.get(position);
+
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString(ITEM_SELECTED, arr.get(position).message);
+            dataToPass.putLong(ITEM_ID, id);
+                if(selectedMassage.sOr) {
+            dataToPass.putBoolean(CHECKED, true);}
+                else {
+            dataToPass.putBoolean(CHECKED, false);
+             }
+
+
+
+            if(isTablet)
+            {
+                DetailsFragment dFragment = new DetailsFragment(); //add a DetailFragment
+                dFragment.setArguments( dataToPass ); //pass it a bundle for information
+                FragmentManager fm = getSupportFragmentManager();
+                        fm.beginTransaction()
+                        .replace(R.id. fl, dFragment) //Add the fragment in FrameLayout
+                        .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
+            }
+            else //isPhone
+            {
+                Intent nextActivity = new Intent(ChatRoomActivity.this, EmptyActivity.class);
+                nextActivity.putExtras(dataToPass); //send data to next activity
+                startActivity(nextActivity); //make the transition
+            }
 
                 });
 

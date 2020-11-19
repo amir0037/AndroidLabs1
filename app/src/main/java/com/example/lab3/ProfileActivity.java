@@ -15,6 +15,7 @@ public class ProfileActivity extends AppCompatActivity {
     ImageButton mImageButton;
     Button chatButton;
     EditText et1;
+    Button weatherButton;
 
     public static final String ACTIVITY_NAME = "PROFILE_ACTIVITY";
     @Override
@@ -32,6 +33,10 @@ public class ProfileActivity extends AppCompatActivity {
         chatButton = findViewById(R.id.goToChat);
         Intent goToProfile = new Intent(ProfileActivity.this, ChatRoomActivity.class);
         chatButton.setOnClickListener(bt -> startActivity(goToProfile));
+
+        weatherButton = findViewById(R.id.weather);
+        Intent goToWeatherForecast = new Intent(ProfileActivity.this, WeatherForecast.class);
+        weatherButton.setOnClickListener(bt -> startActivity(goToWeatherForecast));
 
     }
 
