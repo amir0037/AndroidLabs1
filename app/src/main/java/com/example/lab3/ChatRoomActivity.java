@@ -2,6 +2,7 @@ package com.example.lab3;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.ContentValues;
@@ -41,7 +42,10 @@ public class ChatRoomActivity extends AppCompatActivity {
     EditText editText;
     SQLiteDatabase db;
     FrameLayout fl;
-   // Boolean isTablet = true;
+    Bundle dataToPass;
+    FragmentManager fm;
+    DetailsFragment dFragment;
+    // Boolean isTablet = true;
     public static final String ITEM_SELECTED = "ITEM";
     public static final String ITEM_ID = "ID";
     public static final String CHECKED = "CHECKED";
@@ -61,26 +65,14 @@ public class ChatRoomActivity extends AppCompatActivity {
         editText = findViewById(R.id.editText);
 
 
-        list.setOnItemClickListener((parent, view, position, id) ->{
-            Message selectedMassage = arr.get(position);
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Do you want to delete this?").setMessage("The selected raw is " +
-                    (position) + " The DB id is " + adapter.getItemId(position)).
-                    setPositiveButton("Yes", (click, arg) -> {
-                        db.delete(MyOpener.table_name, MyOpener.col_id + "= ?", new String[] {Long.toString(selectedMassage.getID())});
-                        arr.remove(position);
-                        list.setAdapter(adapter); }).
-                    setNegativeButton("No", (click, arg) -> {
-                        return;
-                    }).create().show();
 
-        });
+
 
         list.setOnItemClickListener((list, view, position, id) ->{
 
            Message selectedMassage = arr.get(position);
 
-            Bundle dataToPass = new Bundle();
+            dataToPass = new Bundle();
             dataToPass.putString(ITEM_SELECTED, arr.get(position).message);
             dataToPass.putLong(ITEM_ID, id);
                 if(selectedMassage.sOr) {
@@ -93,9 +85,9 @@ public class ChatRoomActivity extends AppCompatActivity {
 
             if(isTablet)
             {
-                DetailsFragment dFragment = new DetailsFragment(); //add a DetailFragment
+                dFragment = new DetailsFragment(); //add a DetailFragment
                 dFragment.setArguments( dataToPass ); //pass it a bundle for information
-                FragmentManager fm = getSupportFragmentManager();
+                fm = getSupportFragmentManager();
                         fm.beginTransaction()
                         .replace(R.id. fl, dFragment) //Add the fragment in FrameLayout
                         .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
@@ -108,6 +100,26 @@ public class ChatRoomActivity extends AppCompatActivity {
             }
 
                 });
+
+        list.setOnItemLongClickListener((parent, view, position, id) ->{
+            Message selectedMassage = arr.get(position);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Do you want to delete this?").setMessage("The selected raw is " +
+                    (position) + " The DB id is " + adapter.getItemId(position)).
+                    setPositiveButton("Yes", (click, arg) -> {
+                        db.delete(MyOpener.table_name, MyOpener.col_id + "= ?", new String[] {Long.toString(selectedMassage.getID())});
+                        arr.remove(position);
+                        list.setAdapter(adapter);
+                        if(isTablet) {
+                            fm.beginTransaction().remove(this.dFragment).commit();
+                        }
+
+                    }).
+                    setNegativeButton("No", (click, arg) -> {
+                        return;
+                    }).create().show();
+            return true;
+        });
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
