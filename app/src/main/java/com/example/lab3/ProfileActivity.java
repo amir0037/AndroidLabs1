@@ -16,6 +16,7 @@ public class ProfileActivity extends AppCompatActivity {
     Button chatButton;
     EditText et1;
     Button weatherButton;
+    Button toolbar;
 
     public static final String ACTIVITY_NAME = "PROFILE_ACTIVITY";
     @Override
@@ -38,6 +39,11 @@ public class ProfileActivity extends AppCompatActivity {
         Intent goToWeatherForecast = new Intent(ProfileActivity.this, WeatherForecast.class);
         weatherButton.setOnClickListener(bt -> startActivity(goToWeatherForecast));
 
+        toolbar = findViewById(R.id.toolbar);
+        Intent goToToolbar = new Intent(ProfileActivity.this, TestToolbar.class);
+        toolbar.setOnClickListener(bt -> startActivityForResult(goToToolbar,1));
+
+
     }
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -56,6 +62,8 @@ public class ProfileActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             mImageButton.setImageBitmap(imageBitmap);
+        } else if (resultCode == 500){
+            finish();
         }
         Log.e(ACTIVITY_NAME, "onActivityResult()");
     }

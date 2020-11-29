@@ -34,6 +34,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ChatRoomActivity extends AppCompatActivity {
+
     private MyListAdapter adapter = new MyListAdapter();
     private ArrayList<Message> arr = new ArrayList<>();
     private ListView list;
@@ -81,22 +82,20 @@ public class ChatRoomActivity extends AppCompatActivity {
             dataToPass.putBoolean(CHECKED, false);
              }
 
-
-
             if(isTablet)
             {
-                dFragment = new DetailsFragment(); //add a DetailFragment
-                dFragment.setArguments( dataToPass ); //pass it a bundle for information
+                dFragment = new DetailsFragment();
+                dFragment.setArguments( dataToPass );
                 fm = getSupportFragmentManager();
                         fm.beginTransaction()
-                        .replace(R.id. fl, dFragment) //Add the fragment in FrameLayout
-                        .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
+                        .replace(R.id. fl, dFragment)
+                        .commit();
             }
             else //isPhone
             {
                 Intent nextActivity = new Intent(ChatRoomActivity.this, EmptyActivity.class);
-                nextActivity.putExtras(dataToPass); //send data to next activity
-                startActivity(nextActivity); //make the transition
+                nextActivity.putExtras(dataToPass);
+                startActivity(nextActivity);
             }
 
                 });

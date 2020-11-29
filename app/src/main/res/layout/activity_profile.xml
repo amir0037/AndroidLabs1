@@ -101,4 +101,10 @@ android:orientation="horizontal">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/weather" />
+
+    <Button
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go to Toolbar page" />
 </LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <item android:id="@+id/ChatPage"
+        android:icon="@drawable/chat"
+        android:title="Chat Page"
+        android:orderInCategory="450"
+        />    <!-- This uses showAsAction=always, so look at icon= parameter -->
+
+    <item android:id="@+id/WeatherForecast"
+        android:icon="@drawable/weather"
+        android:orderInCategory="500"
+        android:title="Weather Forecast"
+        />
+
+
+    <item android:id="@+id/GoBackToLogin"
+        android:icon="@drawable/home"
+        android:title="Go back to Log in"
+        android:orderInCategory="600"
+        />
+
+
+
+</menu>
